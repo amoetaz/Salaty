@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TimingsActivity">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar_salatming"
+        >
+
+    </include>
+    <RelativeLayout
+        android:layout_margin="20dp"
+        android:background="@drawable/data_layout"
+        android:layout_below="@id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            style="@style/textStyle"
+            android:id="@+id/fajr_text"
+            android:text="Fajr"
+            android:layout_width="100dp"
+            android:layout_height="50dp" />
+        <TextView
+            style="@style/textsalatvalue"
+            android:id="@+id/fajr_value"
+            android:layout_marginEnd="5dp"
+            android:layout_toEndOf="@+id/fajr_text"
+            android:text="5.00 AM"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <View
+            android:background="@color/colorPrimary"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_below="@id/fajr_text"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"/>
+
+        <TextView
+            style="@style/textStyle"
+            android:layout_below="@id/fajr_text"
+            android:id="@+id/shoroq_text"
+            android:text="Shoroq"
+            android:layout_width="100dp"
+            android:layout_height="50dp" />
+        <TextView
+            style="@style/textsalatvalue"
+            android:layout_below="@id/fajr_value"
+            android:id="@+id/shoroq_value"
+            android:layout_marginEnd="5dp"
+            android:layout_toEndOf="@+id/fajr_text"
+            android:text="5.00 AM"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <View
+            android:background="@color/colorPrimary"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_below="@id/shoroq_value"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"/>
+
+        <TextView
+            style="@style/textStyle"
+            android:layout_below="@id/shoroq_text"
+            android:id="@+id/dohor_text"
+            android:text="Dhohor"
+            android:layout_width="100dp"
+            android:layout_height="50dp" />
+        <TextView
+            style="@style/textsalatvalue"
+            android:layout_below="@id/shoroq_value"
+            android:id="@+id/dohor_value"
+            android:layout_marginEnd="5dp"
+            android:layout_toEndOf="@+id/fajr_text"
+            android:text="5.00 AM"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <View
+            android:background="@color/colorPrimary"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_below="@id/dohor_value"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"/>
+
+        <TextView
+            style="@style/textStyle"
+            android:layout_below="@id/dohor_text"
+            android:id="@+id/asr_text"
+            android:text="Asr"
+            android:layout_width="100dp"
+            android:layout_height="50dp" />
+        <TextView
+            style="@style/textsalatvalue"
+            android:layout_below="@id/dohor_value"
+            android:id="@+id/asr_value"
+            android:layout_marginEnd="5dp"
+            android:layout_toEndOf="@+id/fajr_text"
+            android:text="5.00 AM"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+        <View
+            android:background="@color/colorPrimary"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_below="@id/asr_value"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"/>
+
+        <TextView
+            style="@style/textStyle"
+            android:layout_below="@id/asr_text"
+            android:id="@+id/maghreb_text"
+            android:text="Maghreb"
+            android:layout_width="100dp"
+            android:layout_height="50dp" />
+        <TextView
+            style="@style/textsalatvalue"
+            android:layout_below="@id/asr_value"
+            android:id="@+id/maghreb_value"
+            android:layout_marginEnd="5dp"
+            android:layout_toEndOf="@+id/fajr_text"
+            android:text="5.00 AM"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <View
+            android:background="@color/colorPrimary"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_below="@id/maghreb_text"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"/>
+
+        <TextView
+
+            style="@style/textStyle"
+            android:layout_below="@id/maghreb_text"
+            android:id="@+id/eisha_text"
+            android:text="Eisha"
+            android:layout_width="100dp"
+            android:layout_height="50dp" />
+        <TextView
+            style="@style/textsalatvalue"
+            android:layout_below="@id/maghreb_value"
+            android:id="@+id/eisha_value"
+            android:layout_marginEnd="5dp"
+            android:layout_toEndOf="@+id/fajr_text"
+            android:text="5.00 AM"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+
+    </RelativeLayout>
+</RelativeLayout>

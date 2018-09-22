@@ -1,0 +1,48 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+
+    <style name="EdittextStyle" >
+        <item name="android:gravity">top</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:layout_height">55dp</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+
+    <style name="textStyle" >
+        <item name="android:gravity">start|center</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/harabara</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_marginStart">20dp</item>
+    </style>
+
+    <style name="textsalatvalue" >
+        <item name="android:gravity">start|center</item>
+        <item name="android:layout_marginStart">40dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/harabara</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:layout_marginTop">15dp</item>
+    </style>
+
+    <style name="TextLabel" parent="android:Widget.TextView">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/colorPrimary</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">#666161</item>
+        <item name="colorControlNormal">#666161</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
+</resources>
