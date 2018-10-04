@@ -13,6 +13,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,17 +32,11 @@ import app.com.salaty.viewmodel.TimingsViewmodel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TimingsViewmodel timingsViewmodel;
-    SalaTiming salaTimings;
-    ApiService apiService;
     @BindView(R.id.app_bar)
     Toolbar toolbar;
     @BindView(R.id.buDone)
@@ -54,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton locationFab;
     int year , month , day;
     private FusedLocationProviderClient client;
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "MainActivityclass";
 
     private void requestPermission(){
         ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION}, 1);
@@ -68,65 +63,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getCurrentDate();
-        timingsViewmodel = ViewModelProviders.of(this).get(TimingsViewmodel.class);
         requestPermission();
         client = LocationServices.getFusedLocationProviderClient(this);
 
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //requestData(cityName.getText().toString(),countryName.getText().toString());
-                salaTimings = timingsViewmodel
-                        .getSalaTiming(cityName.getText().toString(),countryName.getText().toString(),month,year).getValue();
-                timingsViewmodel
-                        .getSalaTiming(cityName.getText().toString(),countryName.getText().toString(),month,year
-                        ).observe(MainActivity.this
-                        , new Observer<SalaTiming>() {
-                            @Override
-                            public void onChanged(@Nullable SalaTiming salaTiming) {
-                                Toast.makeText(MainActivity.this, salaTiming.getStatus(), Toast.LENGTH_SHORT).show();
-
-                                Intent intent = new Intent(MainActivity.this,TimingsActivity.class);
-                                intent.putExtra("object", salaTiming);
-                                intent.putExtra("day",day);
-                                startActivity(intent);
-                            }
-                        });
-
-
-            }
-        });
-
-    }
-
-    private void requestData(String city, String country) {
-        apiService = ApiClient.getRetrofit().create(ApiService.class);
-        Call<SalaTiming> salaTiming = apiService.getSalaTiming( city,
-                country,2, month,year);
-
-        salaTiming.enqueue(new Callback<SalaTiming>() {
-            @Override
-            public void onResponse(Call<SalaTiming> call, Response<SalaTiming> response) {
-                salaTimings = response.body();
-
-                if (salaTimings != null) {
-                    Intent intent = new Intent(MainActivity.this,TimingsActivity.class);
-                    intent.putExtra("object", salaTimings);
-                    intent.putExtra("day",day);
-                    startActivity(intent);
-                }else {
-                    Toast.makeText(MainActivity.this, "Please enter valid data", Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<SalaTiming> call, Throwable t) {
-                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 
@@ -143,19 +82,44 @@ public class MainActivity extends AppCompatActivity {
 
         String city = addresses.get(0).getLocality();
         String country = addresses.get(0).getCountryName();
-        requestData(city,country);
+        String locality =  addresses.get(0).getLocality();
+        String addressLine = addresses.get(0).getAddressLine(0);
+        String subLocality = addresses.get(0).getSubLocality();
+        Log.i(TAG, "getCityNameFromLatLong: "+" "+addressLine+" ");
+        launchActivity(country,addressLine);
+        Toast.makeText(this, country+" "+addressLine, Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick(R.id.mylocation_fab)
-    public void onViewClicked() {
-        getSalatimingsByLatLong();
+    private void launchActivity(String country,String city) {
+        Intent intent = new Intent(MainActivity.this,TimingsActivity.class);
+        intent.putExtra("day",day);
+        intent.putExtra("year",year);
+        intent.putExtra("month",month);
+        intent.putExtra("country",country);
+        intent.putExtra("city",city);
+        startActivity(intent);
+    }
+
+    @OnClick({R.id.mylocation_fab,R.id.buDone})
+    public void onViewClicked(View view) {
+        switch (view.getId()){
+            case R.id.mylocation_fab:getSalatimingsByLatLong();break;
+            case R.id.buDone : getSalatimingbycountryandcity();
+            default:break;
+        }
+
+    }
+
+    public void getSalatimingbycountryandcity(){
+        launchActivity(countryName.getText().toString(),cityName.getText().toString());
     }
 
     private void getSalatimingsByLatLong() {
         if (ActivityCompat.checkSelfPermission(MainActivity.this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
             return;
         }
-        client.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
+        client.getLastLocation()
+                .addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
 
@@ -167,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void getCurrentDate(){
         Calendar now = Calendar.getInstance();

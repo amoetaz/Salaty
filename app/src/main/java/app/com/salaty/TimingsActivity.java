@@ -1,9 +1,14 @@
 package app.com.salaty;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
+
+import app.com.salaty.viewmodel.TimingsViewmodel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -23,9 +28,10 @@ public class TimingsActivity extends AppCompatActivity {
     TextView maghrebValue;
     @BindView(R.id.eisha_value)
     TextView eishaValue;
-    private SalaTiming salaTiming;
     private String fajr, shoroq, dohr, asr, maghreb, eisha;
-    private int day ;
+    private int day,year,month ;
+    private String country , city;
+    private TimingsViewmodel timingsViewmodel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +40,9 @@ public class TimingsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        timingsViewmodel = ViewModelProviders.of(this).get(TimingsViewmodel.class);
         getData();
-        initializeUI();
+
     }
 
     private void initializeUI() {
@@ -48,15 +55,26 @@ public class TimingsActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        salaTiming = (SalaTiming) getIntent().getSerializableExtra("object");
         day = getIntent().getIntExtra("day",0);
+        year = getIntent().getIntExtra("year",0);
+        month = getIntent().getIntExtra("month",0);
+        country = getIntent().getStringExtra("country");
+        city = getIntent().getStringExtra("city");
 
-        fajr = salaTiming.getData().get(day).getTimings().getFajr();
-        shoroq = salaTiming.getData().get(day).getTimings().getSunrise();
-        dohr = salaTiming.getData().get(day).getTimings().getDhuhr();
-        asr = salaTiming.getData().get(day).getTimings().getAsr();
-        maghreb = salaTiming.getData().get(day).getTimings().getMaghrib();
-        eisha = salaTiming.getData().get(day).getTimings().getIsha();
+        timingsViewmodel.getSalaTiming(city,country,month,year).observe(this, new Observer<SalaTiming>() {
+            @Override
+            public void onChanged(@Nullable SalaTiming salaTiming) {
+                fajr = salaTiming.getData().get(day).getTimings().getFajr();
+                shoroq = salaTiming.getData().get(day).getTimings().getSunrise();
+                dohr = salaTiming.getData().get(day).getTimings().getDhuhr();
+                asr = salaTiming.getData().get(day).getTimings().getAsr();
+                maghreb = salaTiming.getData().get(day).getTimings().getMaghrib();
+                eisha = salaTiming.getData().get(day).getTimings().getIsha();
+                initializeUI();
+            }
+        });
+
+
 
     }
 

@@ -46,14 +46,7 @@ public class ApiClient {
             @Override
             public void onResponse(@NonNull Call<SalaTiming> call, @NonNull Response<SalaTiming> response) {
                 SalaTiming st = response.body();
-
                 salaTiming.setValue(st);
-                //salaTiming.setData(st.getData());
-                //salaTiming.setCode(st.getCode());
-                //salaTiming.setStatus(st.getStatus());
-
-
-                //Log.i(TAG, "onResponse: "+salaTiming.getStatus());
             }
 
             @Override
@@ -62,10 +55,6 @@ public class ApiClient {
 
             }
         });
-
-
-
-
 
         return salaTiming;
     }
